@@ -1,13 +1,23 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "test-positionnement-zen-academy",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Test de positionnement professionnel - Bilan de compétences par Zen Academy",
+  "keywords": ["bilan de compétences", "reconversion professionnelle", "test de positionnement", "zen academy"],
+  "homepage": "https://zen-academy-test.netlify.app",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:analyze": "vite build --mode analyze",
+    "serve": "vite preview --port 4173",
+    "type-check": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",
