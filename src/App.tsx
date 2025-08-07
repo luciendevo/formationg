@@ -1,58 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Clock, CheckCircle, XCircle, RotateCcw, Home, Play, TrendingUp, Award, Users, Sparkles, Briefcase, ArrowRight, Target, Brain, Heart, BookOpen, Mail, UserX, GitBranch, Compass, Mountain, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, CheckCircle, Play, TrendingUp, Award, Users, Sparkles, Briefcase, ArrowRight, Target, Brain, Heart, BookOpen, Mail, UserX, GitBranch, Compass, Mountain } from 'lucide-react';
 
 interface Question {
   id: number;
   text: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   category: string;
   gradient: string;
 }
 
-const questions: Question[] = [
-  {
-    id: 1,
-    text: "Votre emploi actuel correspond-il à ce que vous aviez initialement envisagé ?",
-    icon: Target,
-    category: "Alignement",
-    gradient: "from-violet-500 via-purple-500 to-indigo-600"
-  },
-  {
-    id: 2,
-    text: "Avez-vous des perspectives d'évolution dans votre poste ?",
-    icon: TrendingUp,
-    category: "Évolution",
-    gradient: "from-emerald-500 via-teal-500 to-cyan-600"
-  },
-  {
-    id: 3,
-    text: "Votre entreprise vous encourage-t-elle à vous former ou à développer de nouvelles compétences ?",
-    icon: Brain,
-    category: "Formation",
-    gradient: "from-orange-500 via-amber-500 to-yellow-500"
-  },
-  {
-    id: 4,
-    text: "Votre travail vous semble-t-il porteur de sens ?",
-    icon: Heart,
-    category: "Sens",
-    gradient: "from-rose-500 via-pink-500 to-red-500"
-  },
-  {
-    id: 5,
-    text: "Vos compétences sont-elles reconnues à leur juste valeur ?",
-    icon: Award,
-    category: "Reconnaissance",
-    gradient: "from-blue-500 via-indigo-500 to-purple-600"
-  },
-  {
-    id: 6,
-    text: "Avez-vous le sentiment d'être utile aux autres dans votre activité ?",
-    icon: Users,
-    category: "Impact",
-    gradient: "from-green-500 via-emerald-500 to-teal-600"
-  }
-];
+
 
 const IntroductionPage: React.FC<{ onStart: () => void; onContact: () => void }> = ({ onStart, onContact }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -106,7 +63,7 @@ const IntroductionPage: React.FC<{ onStart: () => void; onContact: () => void }>
       {/* Main Content */}
       <div className={`relative z-10 px-6 py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             
             {/* Left Column - Image */}
             <div className="relative">
@@ -201,12 +158,12 @@ const IntroductionPage: React.FC<{ onStart: () => void; onContact: () => void }>
                     <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-blue-400/20 to-indigo-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                   
-                  <div className="bg-white/95 backdrop-blur-md rounded-2xl p-8 text-left shadow-xl border border-blue-200/50 relative overflow-hidden">
+                  <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-8 text-left shadow-xl border border-blue-200/50 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-slate-600" />
                     <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent" />
                     
                     <div className="relative z-10">
-                      <h3 className="text-2xl font-black text-gray-800 mb-4 leading-tight">
+                      <h3 className="text-xl sm:text-2xl font-black text-gray-800 mb-4 leading-tight">
                         ENVIE DE CHANGER DE 
                         <span className="text-transparent bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text"> MÉTIER</span> ?
                       </h3>
@@ -247,7 +204,7 @@ const IntroductionPage: React.FC<{ onStart: () => void; onContact: () => void }>
             {/* Right Column - Content */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
                   Devez-vous faire une 
                   <span className="text-transparent bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text"> reconversion</span> ?
                 </h2>
@@ -325,91 +282,9 @@ const IntroductionPage: React.FC<{ onStart: () => void; onContact: () => void }>
   );
 };
 
-const StarRating: React.FC<{
-  rating: number;
-  onRatingChange: (rating: number) => void;
-  disabled?: boolean;
-  gradient: string;
-}> = ({ rating, onRatingChange, disabled = false, gradient }) => {
-  const [hoverRating, setHoverRating] = useState(0);
 
-  return (
-    <div className="flex justify-center items-center space-x-4 my-12">
-      <div className="flex space-x-3">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            type="button"
-            disabled={disabled}
-            className={`group relative transform transition-all duration-300 hover:scale-125 ${
-              disabled ? 'cursor-default' : 'cursor-pointer'
-            }`}
-            onMouseEnter={() => !disabled && setHoverRating(star)}
-            onMouseLeave={() => !disabled && setHoverRating(0)}
-            onClick={() => !disabled && onRatingChange(star)}
-          >
-            <div className={`absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 bg-gradient-to-r ${gradient}`} />
-            <Star
-              size={48}
-              className={`relative transition-all duration-300 ${
-                star <= (hoverRating || rating)
-                  ? `fill-current text-transparent bg-gradient-to-r ${gradient} bg-clip-text drop-shadow-2xl`
-                  : 'text-gray-300 hover:text-gray-400'
-              }`}
-              style={{
-                filter: star <= (hoverRating || rating) ? 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.5))' : 'none'
-              }}
-            />
-            {star <= (hoverRating || rating) && (
-              <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${gradient} opacity-20 blur-md animate-pulse`} />
-            )}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
 
-const ProgressBar: React.FC<{ current: number; total: number }> = ({ current, total }) => {
-  const progress = (current / total) * 100;
-  
-  return (
-    <div className="relative w-full h-3 bg-white/20 backdrop-blur-sm rounded-full overflow-hidden shadow-inner border border-white/30">
-      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 rounded-full" />
-      <div
-        className="h-full bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 rounded-full transition-all duration-500 ease-out relative shadow-lg"
-        style={{ width: `${progress}%` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent rounded-full" />
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-5 h-5 bg-white rounded-full shadow-xl animate-pulse border-2 border-orange-400" />
-      </div>
-      <div className="absolute top-full left-0 right-0 mt-3 flex justify-between text-white/80 text-sm font-medium">
-        <span>Question {current}</span>
-        <span>{Math.round(progress)}% complété</span>
-        <span>{total} questions</span>
-      </div>
-    </div>
-  );
-};
 
-const FloatingParticles: React.FC = () => {
-  return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute w-2 h-2 bg-blue-400/30 rounded-full animate-float"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDuration: `${Math.random() * 10 + 5}s`,
-            animationDelay: `${Math.random() * 5}s`
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 const testQuestions: Question[] = [
   {
@@ -599,40 +474,40 @@ const testQuestions: Question[] = [
 // Header Component
 const Header: React.FC<{ onContact: () => void }> = ({ onContact }) => {
   return (
-    <div className="bg-white shadow-lg relative z-20">
+    <header className="bg-white shadow-lg relative z-20" role="banner">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <img
               src="https://i.postimg.cc/s2MwmGKc/logo-zen.png"
-              alt="Logo Zen"
+              alt="Logo Zen Academy - Retour à l'accueil"
               className="h-14 w-auto"
             />
           </div>
           <div className="flex items-center space-x-6">
-            <div className="text-right">
+            <div className="text-right" role="contentinfo">
               <div className="text-sm text-gray-600">Numéro national non surtaxé</div>
-              <div className="text-lg font-bold text-blue-900">01 76 35 06 84*</div>
+              <div className="text-lg font-bold text-blue-900" aria-label="Téléphone : 01 76 35 06 84">01 76 35 06 84*</div>
             </div>
             <button 
               onClick={onContact}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full font-semibold transition-colors duration-300 flex items-center space-x-2"
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full font-semibold transition-colors duration-300 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-red-300"
+              aria-label="Nous contacter pour plus d'informations"
             >
-              <Mail size={20} />
+              <Mail size={20} aria-hidden="true" />
               <span>NOUS CONTACTER</span>
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
 // Test Page Component
-const TestPage: React.FC<{ onBack: () => void; onContact: () => void }> = ({ onBack, onContact }) => {
+const TestPage: React.FC<{ onContact: () => void }> = ({ onContact }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>(new Array(testQuestions.length).fill(0));
-  const [isCompleted, setIsCompleted] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [contactData, setContactData] = useState({
@@ -694,125 +569,7 @@ const TestPage: React.FC<{ onBack: () => void; onContact: () => void }> = ({ onB
   const canProceed = answers[currentQuestion] > 0;
   const currentQuestionData = testQuestions[currentQuestion];
 
-  if (isCompleted) {
-    const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
-        {/* Header */}
-        <header className="relative z-50 backdrop-blur-xl bg-white/10 border-b border-white/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl flex items-center justify-center">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-white">Test de Positionnement</h1>
-                  <p className="text-sm text-purple-200">Bilan de Compétences</p>
-                </div>
-              </div>
-              <nav className="hidden md:flex space-x-8">
-                <a href="#" className="text-white/80 hover:text-white transition-colors">Accueil</a>
-                <a href="#" className="text-white/80 hover:text-white transition-colors">À propos</a>
-                <a href="#" className="text-white/80 hover:text-white transition-colors">Contact</a>
-              </nav>
-            </div>
-          </div>
-        </header>
 
-        {/* Hero Section avec Image */}
-        <div className="relative h-80 overflow-hidden">
-          <img 
-            src="https://s15-kling.klingai.com/kimg/EMXN1y8qSQoGdXBsb2FkEg55bGFiLXN0dW50LXNncBova2xpbmcvZG93bmxvYWQvTWpnMU9UVXpORFE1TXpBME1qTTJNakkxTVRrMU1qUTA.origin?x-kcdn-pid=112372"
-            alt="Résultats du test"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-white">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Vos Résultats</h2>
-              <p className="text-xl md:text-2xl text-white/90">Découvrez votre profil professionnel</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Header */}
-        <header className="relative z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                  <Briefcase className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-white">Bilan de Compétences</h1>
-                  <p className="text-purple-200 text-sm">Découvrez votre potentiel professionnel</p>
-                </div>
-              </div>
-              <nav className="hidden md:flex space-x-8">
-                <a href="#" className="text-white/80 hover:text-white transition-colors">Accueil</a>
-                <a href="#" className="text-white/80 hover:text-white transition-colors">À propos</a>
-                <a href="#" className="text-white/80 hover:text-white transition-colors">Contact</a>
-              </nav>
-            </div>
-          </div>
-        </header>
-
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-purple-500/20 rounded-full animate-float" style={{animationDuration: '6s'}}></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-pink-500/30 rounded-lg animate-drift" style={{animationDuration: '10s'}}></div>
-          <div className="absolute bottom-32 left-20 w-40 h-40 bg-indigo-500/20 rounded-full animate-floatSlow" style={{animationDuration: '15s'}}></div>
-          <div className="absolute top-1/3 left-1/4 w-20 h-20 bg-purple-400/25 rounded-lg animate-drift" style={{animationDuration: '12s'}}></div>
-          <div className="absolute bottom-1/4 right-1/3 w-28 h-28 bg-pink-400/20 rounded-full animate-float" style={{animationDuration: '8s'}}></div>
-          <div className="absolute bottom-32 right-20 w-16 h-16 bg-pink-500/30 rounded-full animate-drift" style={{animationDuration: '8s'}}></div>
-        </div>
-
-        {/* Hero Image Section */}
-        <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src="https://s15-kling.klingai.com/kimg/EMXN1y8qSQoGdXBsb2FkEg55bGFiLXN0dW50LXNncBova2xpbmcvZG93bmxvYWQvTWpnMU9UVXpORFE1TXpBME1qTTJNakkxTVRrMU1qUTA.origin?x-kcdn-pid=112372"
-                alt="Résultats du test de positionnement"
-                className="w-full h-64 sm:h-80 object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-              <div className="absolute bottom-6 left-6 right-6">
-                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">Vos Résultats</h2>
-                <p className="text-white/90 text-lg">Découvrez votre profil professionnel personnalisé</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main content */}
-        <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
-          <div className="max-w-6xl mx-auto">
-
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl text-center">
-              <div className="w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
-                <CheckCircle size={48} className="text-white" />
-              </div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-6">Test Terminé !</h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Votre score total : <span className="font-bold text-blue-600">{totalScore}/{testQuestions.length * 5}</span>
-              </p>
-              <div className="flex justify-center space-x-4">
-                <button
-                  onClick={onBack}
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-300 flex items-center space-x-2"
-                >
-                  <RotateCcw size={20} />
-                  <span>Retour à l'accueil</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Affichage du profil après toutes les réponses
   if (showProfile) {
@@ -1217,35 +974,66 @@ const TestPage: React.FC<{ onBack: () => void; onContact: () => void }> = ({ onB
         {/* Question actuelle */}
         {!showContactForm && (
           <div className="animate-fadeIn">
-            {/* Question Number */}
+            {/* Progress and Question Number */}
             <div className="text-center mb-8">
-              <h3 className="text-white text-lg font-medium">Question {currentQuestion + 1}</h3>
+              <div className="max-w-md mx-auto mb-4">
+                <div className="flex justify-between text-white/80 text-sm mb-2">
+                  <span>Question {currentQuestion + 1} sur {testQuestions.length}</span>
+                  <span>{Math.round(progress)}% complété</span>
+                </div>
+                <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
+                  <div 
+                    className="bg-gradient-to-r from-blue-400 to-purple-500 h-full transition-all duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                    role="progressbar"
+                    aria-valuenow={Math.round(progress)}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`Progression du test : ${Math.round(progress)}% complété`}
+                  />
+                </div>
+              </div>
+              <h3 className="text-white text-lg font-medium" aria-live="polite">
+                Question {currentQuestion + 1} sur {testQuestions.length}
+              </h3>
             </div>
             
             {/* Question */}
             <div className="text-center mb-16">
-              <h2 className="text-white text-2xl md:text-3xl font-medium leading-relaxed max-w-4xl mx-auto">
+              <h2 
+                className="text-white text-xl sm:text-2xl md:text-3xl font-medium leading-relaxed max-w-4xl mx-auto px-4"
+                id={`question-${currentQuestion + 1}`}
+                role="heading"
+                aria-level="2"
+              >
                 {currentQuestionData.text}
               </h2>
             </div>
             
             {/* Answer Options */}
-            <div className="max-w-4xl mx-auto space-y-4 mb-16">
+            <fieldset className="max-w-4xl mx-auto space-y-3 sm:space-y-4 mb-16 px-4">
+              <legend className="sr-only">
+                Sélectionnez votre niveau d'accord avec l'affirmation précédente
+              </legend>
               {['Pas du tout d\'accord', 'Plutôt pas d\'accord', 'Neutre', 'Plutôt d\'accord', 'Tout à fait d\'accord'].map((option, index) => (
                 <button
                   key={index + 1}
                   onClick={() => handleAnswerChange(index + 1)}
-                  className={`w-full bg-white rounded-2xl p-6 text-left font-medium text-lg transition-all duration-300 hover:shadow-lg flex items-center space-x-4 ${
+                  className={`w-full bg-white rounded-2xl p-4 sm:p-6 text-left font-medium text-base sm:text-lg transition-all duration-300 hover:shadow-lg flex items-center space-x-3 sm:space-x-4 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                     answers[currentQuestion] === index + 1
                       ? 'ring-2 ring-blue-500 shadow-lg'
                       : 'hover:bg-gray-50'
                   }`}
+                  role="radio"
+                  aria-checked={answers[currentQuestion] === index + 1}
+                  aria-describedby={`question-${currentQuestion + 1}`}
+                  aria-label={`${option} - Option ${index + 1} sur 5`}
                 >
                   <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
                     answers[currentQuestion] === index + 1
                       ? 'border-blue-500 bg-blue-500'
                       : 'border-gray-300'
-                  }`}>
+                  }`} aria-hidden="true">
                     {answers[currentQuestion] === index + 1 && (
                       <div className="w-3 h-3 bg-white rounded-full" />
                     )}
@@ -1255,36 +1043,44 @@ const TestPage: React.FC<{ onBack: () => void; onContact: () => void }> = ({ onB
                   </span>
                 </button>
               ))}
-            </div>
+            </fieldset>
             
             {/* Navigation */}
-            <div className="flex justify-between items-center max-w-4xl mx-auto">
+            <nav className="flex flex-col sm:flex-row justify-between items-center max-w-4xl mx-auto gap-4 px-4" aria-label="Navigation du questionnaire">
               <button
                 onClick={handlePrevious}
                 disabled={currentQuestion === 0}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                className={`flex items-center justify-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 w-full sm:w-auto ${
                   currentQuestion === 0
                     ? 'text-white/50 cursor-not-allowed'
                     : 'text-white border border-white/30 hover:bg-white/10'
                 }`}
+                aria-label={currentQuestion === 0 ? 'Question précédente (non disponible)' : `Retour à la question ${currentQuestion}`}
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={20} aria-hidden="true" />
                 <span>Question précédente</span>
               </button>
               
               <button
                 onClick={handleNext}
                 disabled={!canProceed}
-                className={`flex items-center space-x-2 px-8 py-3 rounded-xl font-medium transition-all duration-300 ${
+                className={`flex items-center justify-center space-x-2 px-8 py-3 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto ${
                   canProceed
                     ? 'bg-white text-blue-900 hover:bg-gray-100 shadow-lg'
                     : 'bg-white/30 text-white/50 cursor-not-allowed'
                 }`}
+                aria-label={
+                  !canProceed 
+                    ? 'Veuillez sélectionner une réponse pour continuer'
+                    : currentQuestion === testQuestions.length - 1 
+                      ? 'Voir mes résultats du test' 
+                      : `Continuer vers la question ${currentQuestion + 2}`
+                }
               >
                 <span>{currentQuestion === testQuestions.length - 1 ? 'Voir mes résultats' : 'Question suivante'}</span>
-                <ChevronRight size={20} />
+                <ChevronRight size={20} aria-hidden="true" />
               </button>
-            </div>
+            </nav>
           </div>
         )}
 
@@ -1297,125 +1093,7 @@ const TestPage: React.FC<{ onBack: () => void; onContact: () => void }> = ({ onB
   );
 };
 
-const ResultCard: React.FC<{ score: number; onRestart: () => void }> = ({ score, onRestart }) => {
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => setIsVisible(true), 300);
-  }, []);
-
-  const getRecommendation = (score: number) => {
-    if (score >= 23) {
-      return {
-        title: "🌟 Excellence Professionnelle",
-        subtitle: "Votre épanouissement est remarquable",
-        message: "Vous évoluez dans un environnement professionnel idéal. Un bilan de compétences pourrait révéler de nouvelles opportunités d'excellence et d'innovation dans votre parcours.",
-        gradient: "from-emerald-400 via-teal-500 to-cyan-600",
-        bgGradient: "from-emerald-50 via-teal-50 to-cyan-50",
-        icon: "🚀"
-      };
-    } else if (score >= 18) {
-      return {
-        title: "✨ Potentiel d'Optimisation",
-        subtitle: "Une base solide à développer",
-        message: "Votre situation présente de belles perspectives. Un bilan de compétences vous permettrait d'identifier les leviers pour maximiser votre épanouissement professionnel.",
-        gradient: "from-blue-400 via-indigo-500 to-purple-600",
-        bgGradient: "from-blue-50 via-indigo-50 to-purple-50",
-        icon: "💎"
-      };
-    } else if (score >= 12) {
-      return {
-        title: "🎯 Moment de Réflexion",
-        subtitle: "Des ajustements à envisager",
-        message: "Votre parcours mérite une attention particulière. Un bilan de compétences serait l'opportunité parfaite pour clarifier vos aspirations et définir une stratégie d'évolution.",
-        gradient: "from-amber-400 via-orange-500 to-red-500",
-        bgGradient: "from-amber-50 via-orange-50 to-red-50",
-        icon: "🎨"
-      };
-    } else {
-      return {
-        title: "🌅 Nouveau Départ",
-        subtitle: "L'opportunité d'une transformation",
-        message: "Il est temps d'explorer de nouveaux horizons. Un bilan de compétences sera votre boussole pour naviguer vers un avenir professionnel plus aligné avec vos aspirations.",
-        gradient: "from-rose-400 via-pink-500 to-purple-600",
-        bgGradient: "from-rose-50 via-pink-50 to-purple-50",
-        icon: "🦋"
-      };
-    }
-  };
-
-  const recommendation = getRecommendation(score);
-
-  return (
-    <div className={`transform transition-all duration-1000 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-      <FloatingParticles />
-      
-      <div className="text-center space-y-8 relative">
-        {/* Hero Section */}
-        <div className="relative">
-          <div className={`inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-r ${recommendation.gradient} mb-8 shadow-2xl relative overflow-hidden`}>
-            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent" />
-            <div className="text-6xl animate-bounce">{recommendation.icon}</div>
-            <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${recommendation.gradient} opacity-30 blur-xl animate-pulse`} />
-          </div>
-          
-          <div className={`inline-block px-8 py-4 rounded-full bg-gradient-to-r ${recommendation.gradient} text-white font-bold text-2xl shadow-xl mb-6 relative overflow-hidden`}>
-            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent" />
-            <span className="relative">Score: {score}/30</span>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className={`max-w-4xl mx-auto bg-gradient-to-br ${recommendation.bgGradient} rounded-3xl p-12 shadow-2xl border border-white/50 backdrop-blur-sm relative overflow-hidden`}>
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-          <div className="relative z-10">
-            <h2 className="text-4xl font-black text-gray-800 mb-4 leading-tight">
-              {recommendation.title}
-            </h2>
-            <p className={`text-xl font-semibold bg-gradient-to-r ${recommendation.gradient} bg-clip-text text-transparent mb-8`}>
-              {recommendation.subtitle}
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed mb-12 max-w-3xl mx-auto">
-              {recommendation.message}
-            </p>
-            
-            {/* CTA Section */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/50 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent" />
-              <div className="relative z-10">
-                <div className="flex items-center justify-center mb-6">
-                  <Sparkles className={`w-8 h-8 text-transparent bg-gradient-to-r ${recommendation.gradient} bg-clip-text mr-3`} />
-                  <h3 className="text-2xl font-bold text-gray-800">Prêt(e) pour votre bilan de compétences ?</h3>
-                  <Sparkles className={`w-8 h-8 text-transparent bg-gradient-to-r ${recommendation.gradient} bg-clip-text ml-3`} />
-                </div>
-                <p className="text-gray-600 mb-8 text-lg">
-                  Transformez cette évaluation en plan d'action concret. Nos experts vous accompagnent dans la définition de votre projet professionnel.
-                </p>
-                <button className={`bg-gradient-to-r ${recommendation.gradient} text-white px-12 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden group`}>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative flex items-center">
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    Demander un entretien personnalisé
-                    <Sparkles className="w-5 h-5 ml-2" />
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Restart Button */}
-        <button
-          onClick={onRestart}
-          className="inline-flex items-center space-x-3 text-gray-500 hover:text-gray-700 font-semibold transition-all duration-300 transform hover:scale-105 bg-white/50 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-white/50"
-        >
-          <RotateCcw size={24} />
-          <span className="text-lg">Refaire le test</span>
-        </button>
-      </div>
-    </div>
-  );
-};
 
 // Contact Page Component
 const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -1429,21 +1107,83 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     rgpdConsent: false
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
+    return phone === '' || phoneRegex.test(phone.replace(/\s/g, ''));
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!contactData.firstName.trim()) {
+      newErrors.firstName = 'Le prénom est requis';
+    }
+
+    if (!contactData.lastName.trim()) {
+      newErrors.lastName = 'Le nom est requis';
+    }
+
+    if (!contactData.email.trim()) {
+      newErrors.email = 'L\'email est requis';
+    } else if (!validateEmail(contactData.email)) {
+      newErrors.email = 'Format d\'email invalide';
+    }
+
+    if (contactData.phone && !validatePhone(contactData.phone)) {
+      newErrors.phone = 'Format de téléphone invalide';
+    }
+
+    if (!contactData.rgpdConsent) {
+      newErrors.rgpdConsent = 'Vous devez accepter d\'être contacté(e)';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleContactChange = (field: string, value: string | boolean) => {
     setContactData(prev => ({
       ...prev,
       [field]: value
     }));
+
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactData.firstName || !contactData.lastName || !contactData.email || !contactData.rgpdConsent) {
+    
+    if (!validateForm()) {
       return;
     }
-    console.log('Données de contact:', contactData);
-    alert('Merci ! Votre demande a été envoyée. Nous vous contacterons bientôt.');
-    onClose();
+
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      console.log('Données de contact:', contactData);
+      alert('Merci ! Votre demande a été envoyée. Nous vous contacterons bientôt.');
+      onClose();
+    } catch {
+      alert('Une erreur est survenue. Veuillez réessayer.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -1464,15 +1204,15 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       {/* Main Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-16">
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Contactez-nous
           </h2>
-          <p className="text-xl text-blue-100 mb-6">
+          <p className="text-lg sm:text-xl text-blue-100 mb-6">
             Notre équipe d'experts est à votre disposition pour vous accompagner dans votre projet professionnel
           </p>
         </div>
 
-        <form onSubmit={handleContactSubmit} className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <form onSubmit={handleContactSubmit} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label htmlFor="firstName" className="block text-white font-medium mb-2">
@@ -1484,9 +1224,20 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 required
                 value={contactData.firstName}
                 onChange={(e) => handleContactChange('firstName', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                className={`w-full px-4 py-3 rounded-lg bg-white/20 border text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:border-transparent ${
+                  errors.firstName 
+                    ? 'border-red-400 focus:ring-red-400' 
+                    : 'border-white/30 focus:ring-blue-400'
+                }`}
                 placeholder="Votre prénom"
+                aria-invalid={!!errors.firstName}
+                aria-describedby={errors.firstName ? 'firstName-error' : undefined}
               />
+              {errors.firstName && (
+                <p id="firstName-error" className="mt-1 text-sm text-red-300" role="alert">
+                  {errors.firstName}
+                </p>
+              )}
             </div>
             <div>
               <label htmlFor="lastName" className="block text-white font-medium mb-2">
@@ -1498,9 +1249,20 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 required
                 value={contactData.lastName}
                 onChange={(e) => handleContactChange('lastName', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                className={`w-full px-4 py-3 rounded-lg bg-white/20 border text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:border-transparent ${
+                  errors.lastName 
+                    ? 'border-red-400 focus:ring-red-400' 
+                    : 'border-white/30 focus:ring-blue-400'
+                }`}
                 placeholder="Votre nom"
+                aria-invalid={!!errors.lastName}
+                aria-describedby={errors.lastName ? 'lastName-error' : undefined}
               />
+              {errors.lastName && (
+                <p id="lastName-error" className="mt-1 text-sm text-red-300" role="alert">
+                  {errors.lastName}
+                </p>
+              )}
             </div>
           </div>
 
@@ -1515,9 +1277,20 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 required
                 value={contactData.email}
                 onChange={(e) => handleContactChange('email', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                className={`w-full px-4 py-3 rounded-lg bg-white/20 border text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:border-transparent ${
+                  errors.email 
+                    ? 'border-red-400 focus:ring-red-400' 
+                    : 'border-white/30 focus:ring-blue-400'
+                }`}
                 placeholder="votre.email@exemple.com"
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? 'email-error' : undefined}
               />
+              {errors.email && (
+                <p id="email-error" className="mt-1 text-sm text-red-300" role="alert">
+                  {errors.email}
+                </p>
+              )}
             </div>
             <div>
               <label htmlFor="phone" className="block text-white font-medium mb-2">
@@ -1528,9 +1301,20 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 id="phone"
                 value={contactData.phone}
                 onChange={(e) => handleContactChange('phone', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                className={`w-full px-4 py-3 rounded-lg bg-white/20 border text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:border-transparent ${
+                  errors.phone 
+                    ? 'border-red-400 focus:ring-red-400' 
+                    : 'border-white/30 focus:ring-blue-400'
+                }`}
                 placeholder="06 12 34 56 78"
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? 'phone-error' : undefined}
               />
+              {errors.phone && (
+                <p id="phone-error" className="mt-1 text-sm text-red-300" role="alert">
+                  {errors.phone}
+                </p>
+              )}
             </div>
           </div>
 
@@ -1603,21 +1387,42 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </div>
           </div>
 
-          <div className="flex justify-center space-x-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button
               type="submit"
-              className="bg-gradient-to-r from-[#01b7ba] to-[#150356] text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+              disabled={isSubmitting}
+              className={`bg-gradient-to-r from-[#01b7ba] to-[#150356] text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 ${
+                isSubmitting 
+                  ? 'opacity-75 cursor-not-allowed' 
+                  : 'hover:shadow-lg transform hover:scale-105'
+              }`}
             >
-              Envoyer ma demande
+              {isSubmitting ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  <span>Envoi en cours...</span>
+                </>
+              ) : (
+                <span>Envoyer ma demande</span>
+              )}
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="bg-white/20 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30"
+              disabled={isSubmitting}
+              className="bg-white/20 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Retour à l'accueil
             </button>
           </div>
+          
+          {errors.rgpdConsent && (
+            <div className="mt-4 text-center">
+              <p className="text-red-300 text-sm" role="alert">
+                {errors.rgpdConsent}
+              </p>
+            </div>
+          )}
         </form>
       </div>
     </div>
@@ -1629,23 +1434,34 @@ function App() {
 
   return (
     <>
-      {view === 'intro' && (
-        <IntroductionPage
-          onStart={() => setView('test')}
-          onContact={() => setView('contact')}
-        />
-      )}
+      {/* Skip Links for Keyboard Navigation */}
+      <div className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50">
+        <a 
+          href="#main-content" 
+          className="bg-blue-600 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+        >
+          Aller au contenu principal
+        </a>
+      </div>
 
-      {view === 'test' && (
-        <TestPage
-          onBack={() => setView('intro')}
-          onContact={() => setView('contact')}
-        />
-      )}
+      <main id="main-content" role="main">
+        {view === 'intro' && (
+          <IntroductionPage
+            onStart={() => setView('test')}
+            onContact={() => setView('contact')}
+          />
+        )}
 
-      {view === 'contact' && (
-        <ContactPage onClose={() => setView('intro')} />
-      )}
+        {view === 'test' && (
+          <TestPage
+            onContact={() => setView('contact')}
+          />
+        )}
+
+        {view === 'contact' && (
+          <ContactPage onClose={() => setView('intro')} />
+        )}
+      </main>
     </>
   );
 }
