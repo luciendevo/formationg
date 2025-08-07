@@ -51,7 +51,7 @@ export const SubmissionsList: React.FC<SubmissionsListProps> = ({
 
   useEffect(() => {
     applyFilters();
-  }, [submissions, filters]);
+  }, [submissions, filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadSubmissions = async () => {
     setIsLoading(true);
@@ -70,7 +70,7 @@ export const SubmissionsList: React.FC<SubmissionsListProps> = ({
     setFilteredSubmissions(filtered);
   };
 
-  const handleFilterChange = (key: keyof AdminFilters, value: any) => {
+  const handleFilterChange = (key: keyof AdminFilters, value: string | Date | undefined) => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
 

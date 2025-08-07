@@ -28,7 +28,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       } else {
         setError('Email ou mot de passe incorrect');
       }
-    } catch (err) {
+    } catch {
       setError('Erreur de connexion. Veuillez réessayer.');
     } finally {
       setIsLoading(false);

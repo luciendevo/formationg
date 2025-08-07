@@ -1517,10 +1517,10 @@ function App() {
     window.history.pushState({}, '', '/admin');
   };
 
-  const handleBackToMain = () => {
-    setView('intro');
-    window.history.pushState({}, '', '/');
-  };
+  // const handleBackToMain = () => {
+  //   setView('intro');
+  //   window.history.pushState({}, '', '/');
+  // };
 
   if (view === 'admin') {
     return <AdminApp />;

@@ -206,7 +206,7 @@ export const AdminApp: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [selectedSubmissionId, setSelectedSubmissionId] = useState<string | null>(null);
-  const [editingSubmissionId, setEditingSubmissionId] = useState<string | null>(null);
+  // const [editingSubmissionId, setEditingSubmissionId] = useState<string | null>(null);
 
   useEffect(() => {
     // Vérifier si l'utilisateur est déjà connecté
@@ -230,7 +230,7 @@ export const AdminApp: React.FC = () => {
   };
 
   const handleEditSubmission = (id: string) => {
-    setEditingSubmissionId(id);
+    // setEditingSubmissionId(id);
     // TODO: Implémenter la modal d'édition
     console.log('Edit submission:', id);
   };

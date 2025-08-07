@@ -115,7 +115,7 @@ class AdminService {
     const data = localStorage.getItem(this.STORAGE_KEYS.SUBMISSIONS);
     if (!data) return [];
     
-    return JSON.parse(data).map((submission: any) => ({
+    return JSON.parse(data).map((submission: FormSubmission) => ({
       ...submission,
       submittedAt: new Date(submission.submittedAt),
       followUpDate: submission.followUpDate ? new Date(submission.followUpDate) : undefined
@@ -281,7 +281,7 @@ class AdminService {
     const data = localStorage.getItem(this.STORAGE_KEYS.ADMIN_USERS);
     if (!data) return [];
     
-    return JSON.parse(data).map((user: any) => ({
+    return JSON.parse(data).map((user: AdminUser) => ({
       ...user,
       lastLogin: new Date(user.lastLogin),
       createdAt: new Date(user.createdAt)
