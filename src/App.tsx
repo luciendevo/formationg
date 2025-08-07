@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Clock, CheckCircle, Play, TrendingUp, Award, Users, Sparkles, Briefcase, ArrowRight, Target, Brain, Heart, BookOpen, Mail, UserX, GitBranch, Compass, Mountain } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, CheckCircle, Play, TrendingUp, Award, Users, Sparkles, Briefcase, ArrowRight, Target, Brain, Heart, BookOpen, Mail, UserX, GitBranch, Compass, Mountain, Shield } from 'lucide-react';
+import { AdminApp } from './components/AdminApp';
+import { adminService } from './services/adminService';
 
 interface Question {
   id: number;
@@ -556,9 +558,36 @@ const TestPage: React.FC<{ onContact: () => void }> = ({ onContact }) => {
     if (!contactData.firstName || !contactData.lastName || !contactData.email || !contactData.rgpdConsent) {
       return;
     }
-    console.log('Réponses au test:', answers);
-    // Rediriger vers la page de résultats ou afficher un message de confirmation
-    alert('Merci ! Vos informations ont été enregistrées. Nous vous contacterons bientôt.');
+
+    try {
+      // Calculer le score et la catégorie
+      const testScore = answers.reduce((sum, answer) => sum + answer, 0);
+      let testCategory: 'excellence' | 'optimisation' | 'reflexion' | 'nouveau_depart';
+      
+      if (testScore >= 23) testCategory = 'excellence';
+      else if (testScore >= 18) testCategory = 'optimisation';
+      else if (testScore >= 12) testCategory = 'reflexion';
+      else testCategory = 'nouveau_depart';
+
+      // Sauvegarder dans le service admin
+      const submission = adminService.addSubmission({
+        firstName: contactData.firstName,
+        lastName: contactData.lastName,
+        email: contactData.email,
+        phone: contactData.phone || undefined,
+        company: contactData.company || undefined,
+        position: contactData.position || undefined,
+        testAnswers: answers,
+        testScore,
+        testCategory
+      });
+
+      console.log('Soumission sauvegardée:', submission);
+      alert('Merci ! Vos informations ont été enregistrées. Nous vous contacterons bientôt.');
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde:', error);
+      alert('Une erreur est survenue lors de l\'enregistrement. Veuillez réessayer.');
+    }
   };
 
   const handleProfileCTA = () => {
@@ -1174,12 +1203,27 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
+      // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log('Données de contact:', contactData);
+
+      // Sauvegarder dans le service admin (contact direct sans test)
+      const submission = adminService.addSubmission({
+        firstName: contactData.firstName,
+        lastName: contactData.lastName,
+        email: contactData.email,
+        phone: contactData.phone || undefined,
+        company: contactData.company || undefined,
+        position: contactData.position || undefined,
+        testAnswers: [], // Pas de test pour les contacts directs
+        testScore: 0,
+        testCategory: 'nouveau_depart' // Catégorie par défaut pour les contacts directs
+      });
+
+      console.log('Contact direct sauvegardé:', submission);
       alert('Merci ! Votre demande a été envoyée. Nous vous contacterons bientôt.');
       onClose();
-    } catch {
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde:', error);
       alert('Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setIsSubmitting(false);
@@ -1430,7 +1474,57 @@ const ContactPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 };
 
 function App() {
-  const [view, setView] = useState<'intro' | 'test' | 'contact'>('intro');
+  const [view, setView] = useState<'intro' | 'test' | 'contact' | 'admin'>('intro');
+
+  // Détection de l'URL pour l'accès admin
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (currentPath === '/admin' || currentPath.startsWith('/admin/')) {
+      setView('admin');
+    }
+  }, []);
+
+  // Gestion de l'historique du navigateur pour l'admin
+  useEffect(() => {
+    const handlePopState = () => {
+      const currentPath = window.location.pathname;
+      if (currentPath === '/admin' || currentPath.startsWith('/admin/')) {
+        setView('admin');
+      } else {
+        setView('intro');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Raccourci clavier global pour l'admin (Ctrl+Alt+A)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.altKey && e.key === 'a') {
+        e.preventDefault();
+        handleAdminAccess();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleAdminAccess = () => {
+    setView('admin');
+    window.history.pushState({}, '', '/admin');
+  };
+
+  const handleBackToMain = () => {
+    setView('intro');
+    window.history.pushState({}, '', '/');
+  };
+
+  if (view === 'admin') {
+    return <AdminApp />;
+  }
 
   return (
     <>
@@ -1442,6 +1536,22 @@ function App() {
         >
           Aller au contenu principal
         </a>
+      </div>
+
+      {/* Admin Access Button (Hidden, accessible via keyboard shortcut) */}
+      <div className="fixed bottom-4 right-4 z-40">
+        <button
+          onClick={handleAdminAccess}
+          className="opacity-0 hover:opacity-100 focus:opacity-100 bg-gray-800 text-white p-3 rounded-full shadow-lg transition-opacity duration-300"
+          title="Accès Administration (Ctrl+Alt+A)"
+          onKeyDown={(e) => {
+            if (e.ctrlKey && e.altKey && e.key === 'a') {
+              handleAdminAccess();
+            }
+          }}
+        >
+          <Shield className="w-5 h-5" />
+        </button>
       </div>
 
       <main id="main-content" role="main">
