@@ -72,9 +72,11 @@ const LoginPage: React.FC = () => {
       const success = await handleLogin(email, password);
       
       if (success) {
-        // Use navigate instead of window.location for better SPA behavior
-        const redirectPath = email.includes('admin') ? '/admin' : '/dashboard';
-        navigate(redirectPath);
+        // Use setTimeout to avoid navigation throttling
+        setTimeout(() => {
+          const redirectPath = email.includes('admin') ? '/admin' : '/dashboard';
+          navigate(redirectPath, { replace: true });
+        }, 100);
       } else {
         setError('Identifiants incorrects');
       }
