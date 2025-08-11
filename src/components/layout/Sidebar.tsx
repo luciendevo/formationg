@@ -4,7 +4,7 @@ import {
   Home, 
   Users, 
   BookOpen, 
-  BarChart3, 
+  BarChart, 
   Settings, 
   User, 
   FileText, 
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
 
   // Admin navigation items
   const adminNavItems = [
-    { path: '/admin', icon: BarChart3, label: 'Tableau de bord' },
+    { path: '/admin', icon: BarChart, label: 'Tableau de bord' },
     { path: '/admin/users', icon: Users, label: 'Utilisateurs' },
     { path: '/admin/trainings', icon: BookOpen, label: 'Formations' },
     { path: '/admin/cpf', icon: FileText, label: 'Dossiers CPF' },

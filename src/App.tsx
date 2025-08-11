@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Home, Users, BookOpen, BarChart3, Settings, User, FileText, Award, Target, Briefcase } from 'react-feather';
+import { Home, Users, BookOpen, BarChart, Settings, User, FileText, Award, Target, Briefcase } from 'react-feather';
 import { mockDataService } from './services/mockDataService';
 import { AuthUser } from './types/formationG';
 
