@@ -1,148 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-20px) rotate(120deg);
-  }
-  66% {
-    transform: translateY(-10px) rotate(240deg);
-  }
+/* Variables CSS pour Formation G - Palette 2020 SaaS */
+:root {
+  --primary-blue: #2F80ED;
+  --secondary-grey: #F4F6F8;
+  --accent-orange: #F2994A;
+  --text-dark: #2D3748;
+  --text-light: #718096;
+  --border-light: #E2E8F0;
+  --success-green: #48BB78;
+  --warning-yellow: #ED8936;
+  --error-red: #F56565;
+  --background-white: #FFFFFF;
+  --background-light: #FAFBFC;
 }
 
-@keyframes floatSlow {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  50% {
-    transform: translateY(-30px) rotate(180deg) scale(1.1);
-  }
+/* Styles de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@keyframes drift {
-  0% {
-    transform: translateX(0px) translateY(0px);
-  }
-  25% {
-    transform: translateX(20px) translateY(-15px);
-  }
-  50% {
-    transform: translateX(-10px) translateY(-30px);
-  }
-  75% {
-    transform: translateX(-20px) translateY(-10px);
-  }
-  100% {
-    transform: translateX(0px) translateY(0px);
-  }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--background-light);
 }
 
+/* Layout SaaS 2020 - Sidebar + Main Content */
+.saas-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.saas-sidebar {
+  width: 280px;
+  background: var(--background-white);
+  border-right: 1px solid var(--border-light);
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  overflow-y: auto;
+}
+
+.saas-main {
+  flex: 1;
+  margin-left: 280px;
+  background: var(--background-light);
+}
+
+.saas-header {
+  background: var(--background-white);
+  border-bottom: 1px solid var(--border-light);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.saas-content {
+  padding: 32px;
+}
+
+/* Navigation SaaS */
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  margin: 0 16px 4px 16px;
+}
+
+.nav-item:hover {
+  background: var(--secondary-grey);
+  color: var(--text-dark);
+}
+
+.nav-item.active {
+  background: var(--primary-blue);
+  color: white;
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+/* Boutons SaaS 2020 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary-blue);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2563EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(47, 128, 237, 0.3);
+}
+
+.btn-secondary {
+  background: var(--secondary-grey);
+  color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+  background: #E2E8F0;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary-blue);
+  border: 1px solid var(--primary-blue);
+}
+
+.btn-outline:hover {
+  background: var(--primary-blue);
+  color: white;
+}
+
+.btn-success {
+  background: var(--success-green);
+  color: white;
+}
+
+.btn-warning {
+  background: var(--warning-yellow);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--error-red);
+  color: white;
+}
+
+/* Cards SaaS 2020 */
+.card {
+  background: var(--background-white);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  padding: 24px 24px 0 24px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 24px;
+}
+
+.card-body {
+  padding: 24px;
+}
+
+.card-footer {
+  padding: 0 24px 24px 24px;
+  border-top: 1px solid var(--border-light);
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+/* Forms SaaS 2020 */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: var(--background-white);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* Tables SaaS 2020 */
+.table-container {
+  background: var(--background-white);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: var(--secondary-grey);
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+}
+
+.table td {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-light);
+  font-size: 14px;
+}
+
+.table tr:hover {
+  background: var(--secondary-grey);
+}
+
+/* Status badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.badge-success {
+  background: rgba(72, 187, 120, 0.1);
+  color: var(--success-green);
+}
+
+.badge-warning {
+  background: rgba(237, 137, 54, 0.1);
+  color: var(--warning-yellow);
+}
+
+.badge-danger {
+  background: rgba(245, 101, 101, 0.1);
+  color: var(--error-red);
+}
+
+.badge-info {
+  background: rgba(47, 128, 237, 0.1);
+  color: var(--primary-blue);
+}
+
+.badge-secondary {
+  background: var(--secondary-grey);
+  color: var(--text-light);
+}
+
+/* Animations légères */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-float {
-  animation: float linear infinite;
-}
-
-.animate-floatSlow {
-  animation: floatSlow ease-in-out infinite;
-}
-
-.animate-drift {
-  animation: drift ease-in-out infinite;
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
 }
 
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive */
+@media (max-width: 768px) {
+  .saas-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .saas-sidebar.open {
+    transform: translateX(0);
   }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  
+  .saas-main {
+    margin-left: 0;
   }
-  50% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  
+  .saas-content {
+    padding: 16px;
   }
 }
 
-@keyframes wiggle {
-  0%, 100% {
-    transform: rotate(-3deg);
-  }
-  50% {
-    transform: rotate(3deg);
-  }
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-@keyframes morphing {
-  0%, 100% {
-    border-radius: 50%;
-    transform: scale(1) rotate(0deg);
-  }
-  25% {
-    border-radius: 0%;
-    transform: scale(1.2) rotate(90deg);
-  }
-  50% {
-    border-radius: 50%;
-    transform: scale(0.8) rotate(180deg);
-  }
-  75% {
-    border-radius: 25%;
-    transform: scale(1.1) rotate(270deg);
-  }
+::-webkit-scrollbar-track {
+  background: var(--secondary-grey);
 }
 
-.animate-spin {
-  animation: spin 1s linear infinite;
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 3px;
 }
 
-.animate-bounce {
-  animation: bounce 1s infinite;
-}
-
-.animate-wiggle {
-  animation: wiggle 1s ease-in-out infinite;
-}
-
-.animate-morphing {
-  animation: morphing 6s ease-in-out infinite;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-light);
 }
 
 /* Bordures personnalisées pour les formes */

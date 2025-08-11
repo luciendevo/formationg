@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation G CRM - Test</title>
+    <style>
+        body {
+            font-family: Inter, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f8fafc;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .success {
+            color: #059669;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .info {
+            color: #0369a1;
+            margin-bottom: 10px;
+        }
+        .button {
+            background: #2F80ED;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success">✅ Formation G CRM - Déploiement Réussi !</div>
+        
+        <div class="info"><strong>Application :</strong> Formation G SaaS CRM</div>
+        <div class="info"><strong>Version :</strong> 1.0.0</div>
+        <div class="info"><strong>Status :</strong> Prêt pour production</div>
+        <div class="info"><strong>Base de données :</strong> PostgreSQL (Supabase)</div>
+        
+        <h3>🎯 Fonctionnalités Disponibles :</h3>
+        <ul>
+            <li>✅ 4+ Landing pages stylisées</li>
+            <li>✅ Authentification admin/user</li>
+            <li>✅ Dashboard admin avec CRM</li>
+            <li>✅ Dashboard utilisateur</li>
+            <li>✅ Formulaire CPF 50 questions</li>
+            <li>✅ Base de données complète</li>
+            <li>✅ Design 2020 SaaS</li>
+        </ul>
+        
+        <h3>🔐 Comptes de Test :</h3>
+        <ul>
+            <li><strong>Admin :</strong> admin@formationg.fr / Admin@2022</li>
+            <li><strong>User :</strong> user@formationg.fr / User@2022</li>
+        </ul>
+        
+        <a href="#" class="button" onclick="window.location.reload()">🚀 Accéder à l'Application</a>
+        
+        <hr style="margin: 40px 0;">
+        
+        <h3>🛠️ Si l'erreur MIME persiste :</h3>
+        <ol>
+            <li>Vider le cache navigateur (Ctrl+F5)</li>
+            <li>Tester en mode incognito</li>
+            <li>Attendre 5 minutes pour propagation Netlify</li>
+            <li>Vérifier les headers dans DevTools Network</li>
+        </ol>
+        
+        <p><em>Formation G CRM - Prêt pour la production ! 🎉</em></p>
+    </div>
+    
+    <script>
+        // Test JavaScript simple
+        console.log('✅ Formation G CRM - JavaScript fonctionne !');
+        
+        // Redirection vers l'app principale après 3 secondes
+        setTimeout(() => {
+            if (confirm('Rediriger vers l\'application principale ?')) {
+                window.location.href = '/';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

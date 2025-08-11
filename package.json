@@ -1,11 +1,11 @@
 {
-  "name": "test-positionnement-zen-academy",
+  "name": "formation-g-crm-saas",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Test de positionnement professionnel - Bilan de compétences par Zen Academy",
-  "keywords": ["bilan de compétences", "reconversion professionnelle", "test de positionnement", "zen academy"],
-  "homepage": "https://zen-academy-test.netlify.app",
+  "description": "Formation G - Formation G France 2022 - CRM SaaS complet",
+  "keywords": ["formation", "cpf", "crm", "saas", "formation g", "france"],
+  "homepage": "https://formation-g-crm.netlify.app",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -22,7 +22,14 @@
   "dependencies": {
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.8.1",
+    "formik": "^2.2.9",
+    "yup": "^1.0.0",
+    "react-feather": "^2.0.10",
+    "jspdf": "^2.5.1",
+    "html2canvas": "^1.4.1",
+    "date-fns": "^2.29.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",

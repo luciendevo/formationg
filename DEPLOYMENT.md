@@ -1,38 +1,83 @@
-# 🚀 Guide de Déploiement Netlify
+# Formation G CRM - Guide de Déploiement Netlify Complet
 
 ## 📋 Prérequis
-- Compte Netlify (gratuit)
+
+- Compte Netlify (gratuit ou payant)
+- Compte Supabase (pour la base de données PostgreSQL)
 - Repository Git (GitHub, GitLab, ou Bitbucket)
 - Node.js 18+ installé localement
+- Compte email pour les notifications (Gmail recommandé)
 
-## 🔧 Configuration Automatique
+## 🚀 Étapes de Déploiement
 
-### 1. Déploiement via Git (Recommandé)
+### 1. Préparation de la Base de Données
+
+#### A. Création du Projet Supabase
+1. Aller sur [supabase.com](https://supabase.com)
+2. Créer un nouveau projet "formation-g-crm"
+3. Noter l'URL du projet et la clé API anonyme
+4. Aller dans SQL Editor et exécuter :
+   ```sql
+   -- Copier le contenu de database/formation_g_schema.sql
+   -- Puis exécuter database/seed_data.sql
+   ```
+
+#### B. Configuration RLS (Row Level Security)
+```sql
+-- Activer RLS sur les tables sensibles
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cpf_submissions ENABLE ROW LEVEL SECURITY;
+-- Voir le fichier schema.sql pour toutes les politiques
+```
+
+### 2. Déploiement sur Netlify
+
+#### A. Déploiement via Git (Recommandé)
 
 1. **Connecter le Repository**
    - Aller sur [netlify.com](https://netlify.com)
    - Cliquer "New site from Git"
-   - Choisir votre provider Git
-   - Sélectionner ce repository
+   - Choisir GitHub/GitLab/Bitbucket
+   - Sélectionner le repository `zenacademyLP`
 
-2. **Configuration Build (Auto-détectée)**
+2. **Configuration Build (Auto-détectée via netlify.toml)**
+   ```toml
+   [build]
+     publish = "dist"
+     command = "npm run build"
+     functions = "netlify/functions"
+   
+   [build.environment]
+     NODE_VERSION = "18"
+     NPM_VERSION = "9"
    ```
-   Build command: npm run build
-   Publish directory: dist
-   Node version: 18 (via .nvmrc)
+
+3. **Variables d'Environnement Obligatoires**
+   Dans Site settings > Environment variables, ajouter :
+   ```
+   VITE_APP_NAME=Formation G CRM
+   VITE_APP_URL=https://votre-site.netlify.app
+   VITE_SUPABASE_URL=https://votre-projet.supabase.co
+   VITE_SUPABASE_ANON_KEY=votre-cle-anonyme-supabase
+   JWT_SECRET=votre-secret-jwt-super-securise
+   SUPABASE_SERVICE_ROLE_KEY=votre-cle-service-supabase
    ```
 
-3. **Variables d'Environnement** (optionnel)
-   - Aller dans Site settings > Environment variables
-   - Ajouter si nécessaire
+4. **Variables d'Environnement Optionnelles**
+   ```
+   VITE_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
+   SMTP_HOST=smtp.gmail.com
+   SMTP_USER=votre-email@formationg.fr
+   SMTP_PASS=votre-mot-de-passe-app
+   ```
 
-### 2. Déploiement Manuel (Drag & Drop)
+#### B. Déploiement Manuel (Alternative)
 
-```bash
-# 1. Build local
-npm install
-npm run build
-
+1. **Build Local**
+   ```bash
+   npm install
+   npm run build
+   ```
 # 2. Drag & drop le dossier 'dist' sur netlify.com
 ```
 
