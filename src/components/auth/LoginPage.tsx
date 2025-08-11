@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { LogIn, Eye, EyeOff } from 'react-feather';
 
 // This would normally come from the App.tsx AuthContext, but for now we'll create a simple version
@@ -14,6 +14,7 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   // Get auth context (this will work when integrated with main App)
   const authContext = useContext(AuthContext);
@@ -56,8 +57,9 @@ const LoginPage: React.FC = () => {
         await handleLogin(email, password);
       
       if (success) {
-        // Redirect will happen via Navigate component or context
-        window.location.href = email.includes('admin') ? '/admin' : '/dashboard';
+        // Use navigate instead of window.location for better SPA behavior
+        const redirectPath = email.includes('admin') ? '/admin' : '/dashboard';
+        navigate(redirectPath);
       } else {
         setError('Identifiants incorrects');
       }
