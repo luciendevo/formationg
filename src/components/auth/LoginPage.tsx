@@ -21,21 +21,37 @@ const LoginPage: React.FC = () => {
   
   // Simple login function for demo
   const handleLogin = async (email: string, password: string) => {
-    if (email === 'admin@formationg.fr' && password === 'Admin@2022') {
+    console.log('🔐 Tentative de connexion:', { email, password });
+    console.log('🔍 Email exact:', `"${email}"`);
+    console.log('🔍 Password exact:', `"${password}"`);
+    
+    // Trim whitespace and normalize
+    const cleanEmail = email.trim();
+    const cleanPassword = password.trim();
+    
+    console.log('🧹 Après nettoyage:', { cleanEmail, cleanPassword });
+    
+    if (cleanEmail === 'admin@formationg.fr' && cleanPassword === 'Admin@2022') {
+      console.log('✅ Connexion admin réussie');
       localStorage.setItem('formation_g_user', JSON.stringify({
-        email,
+        email: cleanEmail,
         role: 'admin',
         name: 'Administrateur Formation G'
       }));
       return true;
-    } else if (email === 'user@formationg.fr' && password === 'User@2022') {
+    } else if (cleanEmail === 'user@formationg.fr' && cleanPassword === 'User@2022') {
+      console.log('✅ Connexion utilisateur réussie');
       localStorage.setItem('formation_g_user', JSON.stringify({
-        email,
+        email: cleanEmail,
         role: 'user',
         name: 'Utilisateur Test'
       }));
       return true;
     }
+    
+    console.log('❌ Identifiants incorrects');
+    console.log('Expected admin:', 'admin@formationg.fr', 'Admin@2022');
+    console.log('Expected user:', 'user@formationg.fr', 'User@2022');
     return false;
   };
 
@@ -52,9 +68,8 @@ const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      const success = authContext?.login ? 
-        await authContext.login(email, password) : 
-        await handleLogin(email, password);
+      // Direct authentication logic - simplified
+      const success = await handleLogin(email, password);
       
       if (success) {
         // Use navigate instead of window.location for better SPA behavior
@@ -64,6 +79,7 @@ const LoginPage: React.FC = () => {
         setError('Identifiants incorrects');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Une erreur est survenue lors de la connexion');
     } finally {
       setIsLoading(false);
