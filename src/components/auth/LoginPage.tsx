@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { LogIn, Eye, EyeOff } from 'react-feather';
 
@@ -55,12 +55,15 @@ const LoginPage: React.FC = () => {
     return false;
   };
 
-  // Check if already logged in
-  const savedUser = localStorage.getItem('formation_g_user');
-  if (savedUser) {
-    const user = JSON.parse(savedUser);
-    return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} replace />;
-  }
+  // Check if already logged in on component mount only
+  useEffect(() => {
+    const savedUser = localStorage.getItem('formation_g_user');
+    if (savedUser) {
+      const user = JSON.parse(savedUser);
+      const redirectPath = user.role === 'admin' ? '/admin' : '/dashboard';
+      navigate(redirectPath, { replace: true });
+    }
+  }, []); // Empty dependency array - only run once on mount
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
