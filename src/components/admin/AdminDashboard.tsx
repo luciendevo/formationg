@@ -5,7 +5,7 @@ import {
   FileText, 
   TrendingUp, 
   Award,
-  BarChart3,
+  BarChart,
   Calendar,
   Download,
   Eye,
