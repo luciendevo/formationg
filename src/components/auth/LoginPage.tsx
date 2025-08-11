@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LogIn, Eye, EyeOff } from 'react-feather';
 
-// This would normally come from the App.tsx AuthContext, but for now we'll create a simple version
-const AuthContext = React.createContext<{
-  user: any;
-  login: (email: string, password: string) => Promise<boolean>;
-}>({ user: null, login: async () => false });
+// Import AuthContext from App.tsx instead of creating a duplicate
+// const AuthContext = React.createContext<{
+//   user: any;
+//   login: (email: string, password: string) => Promise<boolean>;
+// }>({ user: null, login: async () => false });
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
   // Get auth context (this will work when integrated with main App)
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
   
   // Simple login function for demo
   const handleLogin = async (email: string, password: string) => {
@@ -55,15 +55,18 @@ const LoginPage: React.FC = () => {
     return false;
   };
 
-  // Check if already logged in on component mount only
+  // Check if already logged in and redirect accordingly
   useEffect(() => {
     const savedUser = localStorage.getItem('formation_g_user');
     if (savedUser) {
       const user = JSON.parse(savedUser);
       const redirectPath = user.role === 'admin' ? '/admin' : '/dashboard';
-      navigate(redirectPath, { replace: true });
+      // Small delay to ensure DOM is ready and avoid throttling
+      setTimeout(() => {
+        navigate(redirectPath, { replace: true });
+      }, 50);
     }
-  }, []); // Empty dependency array - only run once on mount
+  }, [navigate]); // Re-run if navigate changes (which it shouldn't, but for safety)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,11 +78,9 @@ const LoginPage: React.FC = () => {
       const success = await handleLogin(email, password);
       
       if (success) {
-        // Use setTimeout to avoid navigation throttling
-        setTimeout(() => {
-          const redirectPath = email.includes('admin') ? '/admin' : '/dashboard';
-          navigate(redirectPath, { replace: true });
-        }, 100);
+        // Success! The useEffect will handle redirection automatically
+        // when it detects the updated localStorage
+        console.log('🎉 Connexion réussie - redirection automatique en cours...');
       } else {
         setError('Identifiants incorrects');
       }

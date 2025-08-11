@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Home, 
   Users, 
@@ -12,14 +12,9 @@ import {
   LogOut
 } from 'react-feather';
 
-// Simple auth context for demo
-const AuthContext = React.createContext<{
-  user: { role: string; name: string } | null;
-  logout: () => void;
-}>({ user: null, logout: () => {} });
-
 const Sidebar: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   // Get user from localStorage for demo
   const savedUser = localStorage.getItem('formation_g_user');
@@ -27,7 +22,8 @@ const Sidebar: React.FC = () => {
   
   const handleLogout = () => {
     localStorage.removeItem('formation_g_user');
-    window.location.href = '/login';
+    // Use React Router navigation for SPA consistency
+    navigate('/login', { replace: true });
   };
 
   // Admin navigation items
